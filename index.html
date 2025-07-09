@@ -2,16 +2,32 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ツールまとめサイト</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>ツールまとめサイト</h1>
-  <p>これはGitHub Pages上でホストされている静的ページです。</p>
 
-  <ul>
-    <li><a href="https://rakko.tools/" target="_blank">rakko.tools</a></li>
-    <li><a href="https://mtool.work/" target="_blank">mtool.work</a></li>
-  </ul>
+  <section id="tool-list" class="grid"></section>
+
+  <script>
+    fetch('tools.json')
+      .then(res => res.json())
+      .then(tools => {
+        const container = document.getElementById('tool-list');
+        for (const tool of tools) {
+          const card = document.createElement('a');
+          card.className = 'card';
+          card.href = tool.url;
+          card.target = '_blank';
+          card.innerHTML = `
+            <strong>${tool.name}</strong><br />
+            <small>${tool.tags.join(', ')}</small>
+          `;
+          container.appendChild(card);
+        }
+      });
+  </script>
 </body>
 </html>
