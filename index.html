@@ -9,10 +9,10 @@
 <body>
   <h1>ツールまとめサイト</h1>
 
-  <!-- 🔸 タグ横スクロールバー -->
+  <!-- タグ横スクロールバー -->
   <div id="tag-bar" class="tag-scroll"></div>
 
-  <!-- 🔹 ツールカード一覧 -->
+  <!-- ツールカード一覧 -->
   <section id="tool-list" class="grid"></section>
 
   <script>
@@ -22,18 +22,17 @@
         const tagBar = document.getElementById('tag-bar');
         const list = document.getElementById('tool-list');
 
-        // 🔍 ユニークなタグを抽出
+        // ユニークなタグを抽出
         const tags = Array.from(new Set(tools.flatMap(t => t.tags)));
-        let activeTag = 'all';
 
-        // 🔖 「すべて」ボタン
+        // 「すべて」ボタン
         const allBtn = document.createElement('button');
         allBtn.textContent = 'すべて';
         allBtn.dataset.tag = 'all';
         allBtn.className = 'tag active';
         tagBar.appendChild(allBtn);
 
-        // 🔖 タグボタンを生成
+        // 各タグボタンを生成
         tags.forEach(tag => {
           const btn = document.createElement('button');
           btn.textContent = tag;
@@ -42,7 +41,7 @@
           tagBar.appendChild(btn);
         });
 
-        // 🧱 ツールカードの描画
+        // カードを描画する関数
         function renderCards(filterTag) {
           list.innerHTML = '';
           tools
@@ -53,8 +52,8 @@
               card.href = tool.url;
               card.target = '_blank';
               card.innerHTML = `
-                <strong>${tool.name}</strong><br />
-                <small>${tool.tags.join(', ')}</small>
+                <strong>${tool.name}</strong>
+                <p class="tags">${tool.tags.join(', ')}</p>
               `;
               list.appendChild(card);
             });
@@ -62,16 +61,17 @@
 
         renderCards('all');
 
-        // 🎯 タグクリックでフィルター切替
-        tagBar.addEventListener('click', (e) => {
+        // タグクリックでフィルタ＆アクティブ切り替え
+        tagBar.addEventListener('click', e => {
           if (!e.target.dataset.tag) return;
-          const selected = e.target.dataset.tag;
-          document.querySelectorAll('.tag').forEach(btn =>
-            btn.classList.toggle('active', btn.dataset.tag === selected)
+          const sel = e.target.dataset.tag;
+          document.querySelectorAll('.tag').forEach(b =>
+            b.classList.toggle('active', b.dataset.tag === sel)
           );
-          renderCards(selected);
+          renderCards(sel);
         });
-      });
+      })
+      .catch(err => console.error('tools.json の読み込みエラー', err));
   </script>
 </body>
 </html>
