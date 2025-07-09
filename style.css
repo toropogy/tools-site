@@ -1,10 +1,12 @@
-/* style.css（ツールカード・タグバー・レスポンシブ） */
+/* 基本リセット */
 body {
-  font-family: sans-serif;
   margin: 0;
+  padding: 0;
+  font-family: sans-serif;
   background: #f9f9f9;
 }
 
+/* タグ横スクロールバー */
 .tag-scroll {
   display: flex;
   overflow-x: auto;
@@ -30,15 +32,20 @@ body {
   color: #fff;
 }
 
+/* ツールカード用グリッド */
 .grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   padding: 1rem;
   max-width: 1200px;
   margin: auto;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  );
 }
 .card {
+  display: block;
   background: #fff;
   padding: 1rem;
   border: 1px solid #ddd;
@@ -50,7 +57,7 @@ body {
   transition: box-shadow 0.2s;
 }
 .card:hover {
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 .card strong {
   display: block;
@@ -62,9 +69,13 @@ body {
   color: #555;
 }
 
+/* モバイル縦画面調整 */
 @media (max-width: 480px) {
   .grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(160px, 1fr)
+    );
   }
   .card {
     height: auto;
