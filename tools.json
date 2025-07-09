@@ -1,0 +1,12 @@
+[
+  {
+    "name": "IPチェッカー",
+    "url": "https://example.com/ip",
+    "tags": ["network"]
+  },
+  {
+    "name": "JSON整形ツール",
+    "url": "https://example.com/json",
+    "tags": ["text", "format"]
+  }
+]
