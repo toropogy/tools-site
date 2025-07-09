@@ -1,8 +1,6 @@
 [
--  {
--    "name": "IPsチェッカー",
-+  {
-+    "name": "IPチェッカー",
+   {
+     "name": "IPチェッカー",
      "url": "https://example.com/ip",
      "tags": ["network"]
    },
