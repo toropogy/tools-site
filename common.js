@@ -1,73 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const headerURL = 'https://toropogy.github.io/tools-site/header.html';
-  const footerURL = 'https://toropogy.github.io/tools-site/footer.html';
-  const menuURL = 'https://toropogy.github.io/tools-site/menu.json';
+  const baseURL = 'https://toropogy.github.io/tools-site/';
+  const headerURL = baseURL + 'header.html';
+  const footerURL = baseURL + 'footer.html';
+  const menuURL   = baseURL + 'menu.json';
 
-  // ヘッダーを読み込む
+  // ヘッダー読み込み
   fetch(headerURL)
-    .then(res => res.text())
+    .then(r => r.text())
     .then(html => {
       document.body.insertAdjacentHTML('afterbegin', html);
+      setupCategoryMenu();
+      setupScrollBehavior();
+    })
+    .catch(console.error);
 
-      // ヘッダーのCSSは header.html に埋め込まれている前提
+  // フッター読み込み
+  fetch(footerURL)
+    .then(r => r.text())
+    .then(html => document.body.insertAdjacentHTML('beforeend', html))
+    .catch(console.error);
 
-      // カテゴリメニューの読み込み
-      fetch(menuURL)
-        .then(res => res.json())
-        .then(menu => {
-          const list = document.getElementById('category-list');
-          if (!list) return;
-          menu.forEach(item => {
-            const li = document.createElement('li');
-            li.innerHTML = `<a href="${item.url}">${item.label}</a>`;
-            list.appendChild(li);
-          });
+  // 分類メニューの取得＆設定
+  function setupCategoryMenu() {
+    fetch(menuURL)
+      .then(r => r.json())
+      .then(menu => {
+        const list = document.getElementById('category-list');
+        menu.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="${item.url}">${item.label}</a>`;
+          list.appendChild(li);
         });
+      })
+      .catch(console.error);
 
-      // 分類ボタンクリックでドロップダウン開閉
-      document.addEventListener('click', e => {
-        const target = e.target;
-        const menu = document.getElementById('category-list');
-        if (!menu) return;
-
-        if (target.id === 'category-toggle') {
-          menu.classList.toggle('hidden');
-        } else if (!menu.contains(target)) {
-          menu.classList.add('hidden');
-        }
-      });
-
-      // 🔽 スクロールによる AppBar 表示切り替え
-      let lastScrollY = window.scrollY;
-      const header = document.querySelector('.appbar');
-
-      window.addEventListener('scroll', () => {
-        const currentY = window.scrollY;
-
-        if (!header) return;
-
-        if (currentY < lastScrollY) {
-          // 上にスクロール → ヘッダー表示
-          header.style.transform = 'translateY(0)';
-        } else {
-          // 下にスクロール → ヘッダー非表示
-          header.style.transform = 'translateY(-100%)';
-        }
-
-        lastScrollY = currentY;
-      }, { passive: true });
-
-      // 初期状態で見えてるようにする
-      const initHeader = document.querySelector('.appbar');
-      if (initHeader) {
-        initHeader.style.transition = 'transform 0.3s ease';
+    document.addEventListener('click', e => {
+      const toggle = document.getElementById('category-toggle');
+      const menu   = document.getElementById('category-list');
+      if (!menu) return;
+      if (e.target === toggle) {
+        menu.classList.toggle('hidden');
+      } else if (!menu.contains(e.target)) {
+        menu.classList.add('hidden');
       }
     });
+  }
 
-  // フッターを読み込む
-  fetch(footerURL)
-    .then(res => res.text())
-    .then(html => {
-      document.body.insertAdjacentHTML('beforeend', html);
-    });
+  // スクロールでヘッダーを隠す／表示
+  function setupScrollBehavior() {
+    let lastY = window.scrollY;
+    const header = document.querySelector('.appbar');
+    if (!header) return;
+    header.style.transition = 'transform 0.3s ease';
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      header.style.transform = y < lastY ? 'translateY(0)' : 'translateY(-100%)';
+      lastY = y;
+    }, { passive: true });
+  }
 });
