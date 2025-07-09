@@ -5,14 +5,15 @@
   <title>ツールまとめサイト</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
+  <script src="common.js" defer></script>
 </head>
 <body>
-  <h1>ツールまとめサイト</h1>
+  <!-- 🔹 ヘッダーは common.js 経由で差し込み -->
 
-  <!-- タグ横スクロールバー -->
+  <!-- 🔸 タグバー -->
   <div id="tag-bar" class="tag-scroll"></div>
 
-  <!-- ツールカード一覧 -->
+  <!-- 🔸 ツールカード一覧 -->
   <section id="tool-list" class="grid"></section>
 
   <script>
@@ -22,17 +23,14 @@
         const tagBar = document.getElementById('tag-bar');
         const list = document.getElementById('tool-list');
 
-        // ユニークなタグを抽出
         const tags = Array.from(new Set(tools.flatMap(t => t.tags)));
 
-        // 「すべて」ボタン
         const allBtn = document.createElement('button');
         allBtn.textContent = 'すべて';
         allBtn.dataset.tag = 'all';
         allBtn.className = 'tag active';
         tagBar.appendChild(allBtn);
 
-        // 各タグボタンを生成
         tags.forEach(tag => {
           const btn = document.createElement('button');
           btn.textContent = tag;
@@ -41,7 +39,6 @@
           tagBar.appendChild(btn);
         });
 
-        // カードを描画する関数
         function renderCards(filterTag) {
           list.innerHTML = '';
           tools
@@ -61,7 +58,6 @@
 
         renderCards('all');
 
-        // タグクリックでフィルタ＆アクティブ切り替え
         tagBar.addEventListener('click', e => {
           if (!e.target.dataset.tag) return;
           const sel = e.target.dataset.tag;
@@ -70,8 +66,9 @@
           );
           renderCards(sel);
         });
-      })
-      .catch(err => console.error('tools.json の読み込みエラー', err));
+      });
   </script>
+
+  <!-- 🔹 フッターも common.js 経由で差し込み -->
 </body>
 </html>
