@@ -9,24 +9,68 @@
 <body>
   <h1>ツールまとめサイト</h1>
 
+  <!-- 🔸 タグ横スクロールバー -->
+  <div id="tag-bar" class="tag-scroll"></div>
+
+  <!-- 🔹 ツールカード一覧 -->
   <section id="tool-list" class="grid"></section>
 
   <script>
     fetch('tools.json')
       .then(res => res.json())
       .then(tools => {
-        const container = document.getElementById('tool-list');
-        for (const tool of tools) {
-          const card = document.createElement('a');
-          card.className = 'card';
-          card.href = tool.url;
-          card.target = '_blank';
-          card.innerHTML = `
-            <strong>${tool.name}</strong><br />
-            <small>${tool.tags.join(', ')}</small>
-          `;
-          container.appendChild(card);
+        const tagBar = document.getElementById('tag-bar');
+        const list = document.getElementById('tool-list');
+
+        // 🔍 ユニークなタグを抽出
+        const tags = Array.from(new Set(tools.flatMap(t => t.tags)));
+        let activeTag = 'all';
+
+        // 🔖 「すべて」ボタン
+        const allBtn = document.createElement('button');
+        allBtn.textContent = 'すべて';
+        allBtn.dataset.tag = 'all';
+        allBtn.className = 'tag active';
+        tagBar.appendChild(allBtn);
+
+        // 🔖 タグボタンを生成
+        tags.forEach(tag => {
+          const btn = document.createElement('button');
+          btn.textContent = tag;
+          btn.dataset.tag = tag;
+          btn.className = 'tag';
+          tagBar.appendChild(btn);
+        });
+
+        // 🧱 ツールカードの描画
+        function renderCards(filterTag) {
+          list.innerHTML = '';
+          tools
+            .filter(t => filterTag === 'all' || t.tags.includes(filterTag))
+            .forEach(tool => {
+              const card = document.createElement('a');
+              card.className = 'card';
+              card.href = tool.url;
+              card.target = '_blank';
+              card.innerHTML = `
+                <strong>${tool.name}</strong><br />
+                <small>${tool.tags.join(', ')}</small>
+              `;
+              list.appendChild(card);
+            });
         }
+
+        renderCards('all');
+
+        // 🎯 タグクリックでフィルター切替
+        tagBar.addEventListener('click', (e) => {
+          if (!e.target.dataset.tag) return;
+          const selected = e.target.dataset.tag;
+          document.querySelectorAll('.tag').forEach(btn =>
+            btn.classList.toggle('active', btn.dataset.tag === selected)
+          );
+          renderCards(selected);
+        });
       });
   </script>
 </body>
