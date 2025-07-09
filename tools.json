@@ -1,57 +1,59 @@
 [
-  {
-    "name": "IPsチェッカー",
-    "url": "https://example.com/ip",
-    "tags": ["network"]
-  },
-  {
-    "name": "JSON整形ツール",
-    "url": "https://example.com/json",
-    "tags": ["text", "format"]
-  },
-  {
-    "name": "アイビー・リー・メソッドタスクマネージャー",
-    "url": "https://example.com/ivy-lee-tasks",
-    "tags": ["time-management"]
-  },
-  {
-    "name": "スリーグッドシングスジャーナル",
-    "url": "https://example.com/three-good-things",
-    "tags": ["self-care", "journal"]
-  },
-  {
-    "name": "2分ルールタスクジェネレーター",
-    "url": "https://example.com/2min-rule",
-    "tags": ["habit", "action"]
-  },
-  {
-    "name": "マインドダンピングツール",
-    "url": "https://example.com/mind-dumping",
-    "tags": ["thinking", "organize"]
-  },
-  {
-    "name": "ハビットチェインエディター",
-    "url": "https://example.com/habit-chain",
-    "tags": ["habit", "workflow"]
-  },
-  {
-    "name": "ビジュアルトリガーツール",
-    "url": "https://example.com/visual-trigger",
-    "tags": ["reminder", "visual"]
-  },
-  {
-    "name": "ジャーナリングテキストエディター",
-    "url": "https://example.com/journaling",
-    "tags": ["journal", "analysis"]
-  },
-  {
-    "name": "グラウンディングガイド",
-    "url": "https://example.com/grounding",
-    "tags": ["mindfulness", "wellness"]
-  },
-  {
-    "name": "テンプレート生活ルーチンエディター",
-    "url": "https://example.com/template-routine",
-    "tags": ["routine", "automation"]
-  }
+-  {
+-    "name": "IPsチェッカー",
++  {
++    "name": "IPチェッカー",
+     "url": "https://example.com/ip",
+     "tags": ["network"]
+   },
+   {
+     "name": "JSON整形ツール",
+     "url": "https://example.com/json",
+     "tags": ["text", "format"]
+   },
+   {
+     "name": "アイビー・リー・メソッドタスクマネージャー",
+     "url": "https://example.com/ivy-lee-tasks",
+     "tags": ["time-management"]
+   },
+   {
+     "name": "スリーグッドシングスジャーナル",
+     "url": "https://example.com/three-good-things",
+     "tags": ["self-care", "journal"]
+   },
+   {
+     "name": "2分ルールタスクジェネレーター",
+     "url": "https://example.com/2min-rule",
+     "tags": ["habit", "action"]
+   },
+   {
+     "name": "マインドダンピングツール",
+     "url": "https://example.com/mind-dumping",
+     "tags": ["thinking", "organize"]
+   },
+   {
+     "name": "ハビットチェインエディター",
+     "url": "https://example.com/habit-chain",
+     "tags": ["habit", "workflow"]
+   },
+   {
+     "name": "ビジュアルトリガーツール",
+     "url": "https://example.com/visual-trigger",
+     "tags": ["reminder", "visual"]
+   },
+   {
+     "name": "ジャーナリングテキストエディター",
+     "url": "https://example.com/journaling",
+     "tags": ["journal", "analysis"]
+   },
+   {
+     "name": "グラウンディングガイド",
+     "url": "https://example.com/grounding",
+     "tags": ["mindfulness", "wellness"]
+   },
+   {
+     "name": "テンプレート生活ルーチンエディター",
+     "url": "https://example.com/template-routine",
+     "tags": ["routine", "automation"]
+   }
 ]
