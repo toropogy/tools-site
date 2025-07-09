@@ -1,5 +1,6 @@
 /* === AppBar（ヘッダー） === */
 .appbar {
+  transition: transform 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: space-between;
