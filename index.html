@@ -3,35 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <title>ツールまとめサイト</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- ツールサイト固有のスタイル -->
   <link rel="stylesheet" href="style.css" />
-  <script src="common.js" defer></script>
+
+  <!-- 共通 UI 部品を site-ui から一行読み込み -->
+  <script
+    src="https://toropogy.github.io/site-ui/common.js"
+    defer
+  ></script>
 </head>
 <body>
-  <!-- 🔹 ヘッダーは common.js 経由で差し込み -->
+  <!-- 共通ヘッダーは common.js が挿入 -->
 
-  <!-- 🔸 タグバー -->
+  <!-- タグバー -->
   <div id="tag-bar" class="tag-scroll"></div>
 
-  <!-- 🔸 ツールカード一覧 -->
+  <!-- ツールカード一覧 -->
   <section id="tool-list" class="grid"></section>
 
   <script>
+    // tools.json をフェッチしてタグバー＆カードを描画
     fetch('tools.json')
-      .then(res => res.json())
-      .then(tools => {
+      .then((r) => r.json())
+      .then((tools) => {
         const tagBar = document.getElementById('tag-bar');
-        const list = document.getElementById('tool-list');
+        const list   = document.getElementById('tool-list');
+        // 重複除外したタグを収集
+        const tags = Array.from(
+          new Set(tools.flatMap((t) => t.tags))
+        );
 
-        const tags = Array.from(new Set(tools.flatMap(t => t.tags)));
-
+        // 「すべて」ボタン
         const allBtn = document.createElement('button');
         allBtn.textContent = 'すべて';
         allBtn.dataset.tag = 'all';
         allBtn.className = 'tag active';
         tagBar.appendChild(allBtn);
 
-        tags.forEach(tag => {
+        // 各タグボタン
+        tags.forEach((tag) => {
           const btn = document.createElement('button');
           btn.textContent = tag;
           btn.dataset.tag = tag;
@@ -39,36 +51,49 @@
           tagBar.appendChild(btn);
         });
 
+        // カード描画関数
         function renderCards(filterTag) {
           list.innerHTML = '';
           tools
-            .filter(t => filterTag === 'all' || t.tags.includes(filterTag))
-            .forEach(tool => {
-              const card = document.createElement('a');
-              card.className = 'card';
-              card.href = tool.url;
-              card.target = '_blank';
-              card.innerHTML = `
+            .filter(
+              (t) =>
+                filterTag === 'all' ||
+                t.tags.includes(filterTag)
+            )
+            .forEach((tool) => {
+              const a = document.createElement('a');
+              a.className = 'card';
+              a.href = tool.url;
+              a.target = '_blank';
+              a.innerHTML = `
                 <strong>${tool.name}</strong>
                 <p class="tags">${tool.tags.join(', ')}</p>
               `;
-              list.appendChild(card);
+              list.appendChild(a);
             });
         }
 
+        // 初回表示
         renderCards('all');
 
-        tagBar.addEventListener('click', e => {
+        // タグクリックでフィルター切り替え
+        tagBar.addEventListener('click', (e) => {
           if (!e.target.dataset.tag) return;
           const sel = e.target.dataset.tag;
-          document.querySelectorAll('.tag').forEach(b =>
-            b.classList.toggle('active', b.dataset.tag === sel)
-          );
+          // activeクラス切替
+          document
+            .querySelectorAll('.tag')
+            .forEach((b) =>
+              b.classList.toggle(
+                'active',
+                b.dataset.tag === sel
+              )
+            );
           renderCards(sel);
         });
       });
   </script>
 
-  <!-- 🔹 フッターも common.js 経由で差し込み -->
+  <!-- 共通フッターは common.js が挿入 -->
 </body>
 </html>
