@@ -8,6 +8,34 @@ body {
 h1 {
   margin-bottom: 1rem;
 }
+
+/* 🔸 タグバー */
+.tag-scroll {
+  overflow-x: auto;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+  scroll-snap-type: x mandatory;
+}
+.tag {
+  flex-shrink: 0;
+  background: #eee;
+  border: none;
+  border-radius: 16px;
+  padding: 0.3rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: background 0.2s;
+}
+.tag.active {
+  background: #0070f3;
+  color: white;
+}
+
+/* 🔹 ツールカード */
 .grid {
   display: grid;
   gap: 1rem;
@@ -20,13 +48,17 @@ h1 {
   border: 1px solid #ddd;
   text-decoration: none;
   color: inherit;
-  transition: 0.2s;
+  transition: box-shadow 0.2s;
 }
 .card:hover {
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 .card strong {
   display: block;
   font-size: 1rem;
   margin-bottom: 0.5rem;
+}
+.card small {
+  color: #555;
+  font-size: 0.8rem;
 }
