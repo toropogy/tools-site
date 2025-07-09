@@ -12,4 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(html => {
       document.body.insertAdjacentHTML('beforeend', html);
     });
+  fetch('https://toropogy.github.io/tools-site/menu.json')
+  .then(res => res.json())
+  .then(menu => {
+    const list = document.getElementById('category-list');
+    menu.forEach(item => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${item.url}">${item.label}</a>`;
+      list.appendChild(li);
+    });
+  });
+
 });
